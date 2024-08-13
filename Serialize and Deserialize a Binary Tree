@@ -1,0 +1,40 @@
+import json
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def serialize(root):
+    if not root:
+        return None
+    return json.dumps(serialize_helper(root))
+
+def serialize_helper(node):
+    if not node:
+        return None
+    return {
+        'val': node.val,
+        'left': serialize_helper(node.left),
+        'right': serialize_helper(node.right)
+    }
+
+def deserialize(data):
+    if not data:
+        return None
+    return deserialize_helper(json.loads(data))
+
+def deserialize_helper(data):
+    if not data:
+        return None
+    node = TreeNode(data['val'])
+    node.left = deserialize_helper(data['left'])
+    node.right = deserialize_helper(data['right'])
+    return node
+
+# Example
+root = TreeNode(1, TreeNode(2), TreeNode(3, TreeNode(4), TreeNode(5)))
+serialized = serialize(root)
+print(serialized)
+deserialized = deserialize(serialized)
