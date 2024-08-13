@@ -1,0 +1,11 @@
+def find_pairs(nums, target):
+    seen = set()
+    pairs = []
+    for num in nums:
+        if target - num in seen:
+            pairs.append((num, target - num))
+        seen.add(num)
+    return pairs
+
+# Example
+print(find_pairs([1, 2, 3, 4, 5, 6], 7))
